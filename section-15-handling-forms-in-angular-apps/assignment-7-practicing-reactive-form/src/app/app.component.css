@@ -1,0 +1,8 @@
+.container {
+  margin-top: 30px;
+}
+
+/* classes that ng addes can be targeted */
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}

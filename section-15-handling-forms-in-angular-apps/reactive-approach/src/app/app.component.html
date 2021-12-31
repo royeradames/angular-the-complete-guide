@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!-- signed up ts formGroup with this html form -->
+      <!-- ngSubmit overrides the default submit method with any desire ts method -->
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <!-- next tell angular what inputs are connected to the fromGroup by using formControlName -->
+        <div class="form-group">
+          <!-- the html need to sync with the parent formGroup -->
+          <!-- FormGroupName are use to sync with the wrapping formGroupName used in the parent formGroup -->
+          <!-- key word: update your syncing -->
+          <div formGroupName="userData">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              class="form-control"
+              formControlName="username"
+            />
+            <!-- the get function needs to exprecess the wrappers FormGroup -->
+            <span
+              *ngIf="
+                !signupForm.get('userData.username').valid &&
+                signupForm.get('userData.username').touched
+              "
+              class="help-block"
+            >
+              <!-- custom error message can be display by seeing if the specific form control method has any key value pair error, and displaying a message accordimgly -->
+              <span
+                *ngIf="
+                  signupForm.get('userData.username').errors['namesIsForbidden']
+                "
+                class="help-block"
+                >This name is invalid</span
+              >
+              <span
+                *ngIf="signupForm.get('userData.username').errors['required']"
+                class="help-block"
+                >This name is required</span
+              >
+            </span>
+            <div class="form-group">
+              <label for="email">email</label>
+              <input
+                type="text"
+                id="email"
+                class="form-control"
+                formControlName="email"
+              />
+            </div>
+            <span
+              *ngIf="
+                !signupForm.get('userData.email').valid &&
+                signupForm.get('userData.email').touched
+              "
+              class="help-block"
+              >Please enter a valid email!</span
+            >
+          </div>
+        </div>
+        <div class="radio" *ngFor="let gender of genders">
+          <label>
+            <input type="radio" [value]="gender" formControlName="gender" />{{
+              gender
+            }}
+          </label>
+        </div>
+
+        <!-- add a control when the user click the button -->
+        <!-- formArray property needs to be sync with parent FormGroup -->
+        <div formArrayName="hobbies">
+          <h4>Your Hobbies</h4>
+          <button class="btn btn-default" type="button" (click)="onAddHobby()">
+            Add Hobby
+          </button>
+          <!-- the form controls are name base on the index -->
+          <div
+            class="form-group"
+            *ngFor="
+              let hobbyControl of signupForm.get('hobbies').controls;
+              let i = index
+            "
+          >
+            <input type="text" class="form-control" [formControlName]="i" />
+          </div>
+        </div>
+
+        <span *ngIf="!signupForm.valid && signupForm.touched" class="help-block"
+          >Please correct the form</span
+        >
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
