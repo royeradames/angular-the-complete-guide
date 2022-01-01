@@ -104,11 +104,12 @@
 
         <!-- radio are handle teh same as the other ones -->
         <div class="radio" *ngFor="let gender of genders">
+          <!-- set the default value to defaultGender, it can be change to anything else. -->
           <label>
             <input
               type="radio"
               name="gender"
-              [ngModel]="'female'"
+              [ngModel]="defaultGender"
               [value]="gender"
               required
             />

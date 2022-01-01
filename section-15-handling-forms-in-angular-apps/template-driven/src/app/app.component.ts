@@ -62,7 +62,8 @@ export class AppComponent {
 
   /* handling radio buttons */
   genders = ["male", "female"];
-
+  // handle setting gender to male
+  defaultGender = this.genders[0];
   /* handle form data */
   user = {
     username: "",
