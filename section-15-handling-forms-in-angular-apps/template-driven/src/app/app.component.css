@@ -1,3 +1,18 @@
 .container {
   margin-top: 30px;
 }
+
+/* will added it to the whole form */
+/* .ng-invalid{
+  border: 1px solid red;
+} */
+
+/* will add it to the specific input even when the user as not touch it */
+/* input.ng-invalid{
+  border: 1px solid red;
+} */
+
+/* it only actives when the user leaves an input invalid */
+input.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
