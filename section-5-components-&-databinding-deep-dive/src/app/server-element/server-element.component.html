@@ -1,11 +1,11 @@
 <div class="panel panel-default">
-  <div class="panel-heading">{{ element.name }}</div>
+  <div class="panel-heading">
+    {{ element.name }}
+    <!-- you can use ngocontent select to select an element by css selector and customaize where to put the html content from the parent -->
+    <!-- <ng-content select=".test"></ng-content> -->
+  </div>
   <div class="panel-body">
-    <p>
-      <strong *ngIf="element.type === 'server'" style="color: red">{{
-        element.content
-      }}</strong>
-      <em *ngIf="element.type === 'blueprint'">{{ element.content }}</em>
-    </p>
+    <!-- acts as a hook for any content that is inside the custom component tag -->
+    <ng-content></ng-content>
   </div>
 </div>

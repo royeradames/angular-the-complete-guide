@@ -27,7 +27,20 @@
       <app-server-element
         *ngFor="let serverElement of serverElements"
         [svElement]="serverElement"
-      ></app-server-element>
+      >
+        <!-- needs ng-content tag inside the component to render the content inside the component tag wihtout it it renders nothing
+          - specific elements can be selected by using the ng-content selectors
+        -->
+        <p>
+          <strong *ngIf="serverElement.type === 'server'" style="color: red">{{
+            serverElement.content
+          }}</strong>
+          <em *ngIf="serverElement.type === 'blueprint'">{{
+            serverElement.content
+          }}</em>
+        </p>
+        <!-- <p class="test">Testing to see if you can put different anchers</p> -->
+      </app-server-element>
     </div>
   </div>
 </div>
