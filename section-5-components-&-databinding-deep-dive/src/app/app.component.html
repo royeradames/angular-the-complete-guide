@@ -28,9 +28,11 @@
         *ngFor="let serverElement of serverElements"
         [svElement]="serverElement"
       >
-        <!-- needs ng-content tag inside the component to render the content inside the component tag wihtout it it renders nothing
-          - specific elements can be selected by using the ng-content selectors
-        -->
+        <!-- you can pass down html by
+        - putthing the html inside the component tag
+        - using ng-content to specify where to put the html
+          - ng-content can select an element by css selector
+       -->
         <p>
           <strong *ngIf="serverElement.type === 'server'" style="color: red">{{
             serverElement.content
