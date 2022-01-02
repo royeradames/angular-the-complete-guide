@@ -1,4 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
 
 @Component({
   selector: "app-cookpit",
@@ -6,8 +13,17 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
   styleUrls: ["./cookpit.component.css"],
 })
 export class CookpitComponent implements OnInit {
-  newServerName = "";
-  newServerContent = "";
+  // newServerName = "";
+  // newServerContent = "";
+
+  /* get access to a local reference without passing it through a function with ViewChild and input the local reference name inot view child
+  - you can select a component by passign the component type
+    - not as a string
+    - give access to the first instance of the component
+  - local reference is more common
+  */
+
+  @ViewChild("serverContentInput") serverContentInput: ElementRef;
 
   constructor() {}
   ngOnInit(): void {}
@@ -27,15 +43,18 @@ export class CookpitComponent implements OnInit {
   // emit the event
   onAddServer(nameInput: HTMLInputElement) {
     this.serverCreated.emit({
-      /* alternative: use local reference to capture an input state */
+      /* use local reference to capture an input state */
       serverName: nameInput.value,
-      serverContent: this.newServerContent,
+      /* avoid chaning the element through chaning the native element. Use 2 way binding or string interpolation */
+      serverContent: this.serverContentInput.nativeElement.value,
     });
   }
   onAddBlueprint(nameInput: HTMLInputElement) {
     this.blueprintCreated.emit({
+      /* use local reference to capture an input state */
       serverName: nameInput.value,
-      serverContent: this.newServerContent,
+      /* avoid chaning the element through chaning the native element. Use 2 way binding or string interpolation */
+      serverContent: this.serverContentInput.nativeElement.value,
     });
   }
 }

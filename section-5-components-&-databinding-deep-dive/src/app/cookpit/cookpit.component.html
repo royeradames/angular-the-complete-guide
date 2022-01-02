@@ -6,9 +6,17 @@
     <!-- local references (#(name of reference)) gives you access to the element and all its properties -->
     <input type="text" class="form-control" #serverNameInput />
     <label>Server Content</label>
-    <input type="text" class="form-control" [(ngModel)]="newServerContent" />
+
+    <!-- two way binding solution to get access to this input values-->
+    <!-- <input type="text" class="form-control" [(ngModel)]="newServerContent" /> -->
+
+    <!-- local reference solution to get access to this input methods and values -->
+    <input type="text" class="form-control" #serverContentInput />
     <br />
+
+    <!-- this button works great with 2 way binding -->
     <!-- <button class="btn btn-primary" (click)="onAddServer()">Add Server</button> -->
+
     <button class="btn btn-primary" (click)="onAddServer(serverNameInput)">
       Add Server
     </button>
