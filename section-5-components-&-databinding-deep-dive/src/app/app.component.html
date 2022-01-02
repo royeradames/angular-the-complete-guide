@@ -1,0 +1,33 @@
+<!-- components can be made using the cli https://angular.io/cli
+  - to make a component, run ng g c component-name
+-->
+<div class="container">
+  <!-- get data from the cookpit by listening to the output events
+    - the event data is capture by $event
+    - this serverCreate and bluePrintCreated are custom events
+      - they are decorated as @Output()
+      - they pass down the variable data
+      - the custom events are a instance of angular core Event Emitters
+  -->
+  <!-- custom property and event binding is prop drilling -->
+  <app-cookpit
+    (serverCreated)="onServerAdded($event)"
+    (bpCreated)="onBlueprintAdded($event)"
+  ></app-cookpit>
+  <hr />
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- a component can be loop through -->
+      <!-- set up custom property binding
+        - [element]="serverElement"
+        - inside ts use @Input() decorator to expose the element to the parent component
+        - you can use an alias if you want to be more descriptive with what element you are passing down
+          - pass the alias string name to the input decorator to create an alias
+       -->
+      <app-server-element
+        *ngFor="let serverElement of serverElements"
+        [svElement]="serverElement"
+      ></app-server-element>
+    </div>
+  </div>
+</div>
