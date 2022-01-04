@@ -28,4 +28,14 @@ export class AppComponent {
       content: blueprintData.serverContent,
     });
   }
+
+  /* change something on the page so the onChange in server-element can see it */
+  onChangeFirst() {
+    this.serverElements[0].name = "Changed!";
+  }
+
+  /* handle destroying the first element so that onDestroy lifecyle method can be ran in server-element */
+  onDestoryFirst() {
+    this.serverElements.splice(0, 1);
+  }
 }

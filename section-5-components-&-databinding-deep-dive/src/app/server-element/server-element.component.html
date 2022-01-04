@@ -1,8 +1,13 @@
 <div class="panel panel-default">
+  <!-- <div class="panel-heading"> -->
+  <!-- {{ element.name }} -->
+  <!-- you can use ngocontent select to select an element by css selector and customaize where to put the html content from the parent -->
+  <!-- <ng-content select=".test"></ng-content> -->
+  <!-- </div> -->
+
+  <!-- display the name. For showing how OnChanges work -->
   <div class="panel-heading">
-    {{ element.name }}
-    <!-- you can use ngocontent select to select an element by css selector and customaize where to put the html content from the parent -->
-    <!-- <ng-content select=".test"></ng-content> -->
+    {{ name }}
   </div>
   <div class="panel-body">
     <!-- acts as a hook for any content that is inside the custom component tag -->

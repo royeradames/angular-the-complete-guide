@@ -17,6 +17,16 @@
   <hr />
   <div class="row">
     <div class="col-xs-12">
+      <!-- to show how the onChange method works add a button that changes something on the page -->
+      <button class="btn btn-primary" (click)="onChangeFirst()">
+        Change first Element
+      </button>
+
+      <!-- destry the first element so server-element can run the onDistroy method lifecycle -->
+      <button class="btn btn-danger" (click)="onDestoryFirst()">
+        Destroy first Component
+      </button>
+
       <!-- a component can be loop through -->
       <!-- set up custom property binding
         - [element]="serverElement"
@@ -27,6 +37,7 @@
       <app-server-element
         *ngFor="let serverElement of serverElements"
         [svElement]="serverElement"
+        [name]="serverElement.name"
       >
         <!-- you can pass down html by
         - putthing the html inside the component tag
