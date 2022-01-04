@@ -16,13 +16,17 @@ export class CookpitComponent implements OnInit {
   // newServerName = "";
   // newServerContent = "";
 
-  /* get access to a local reference without passing it through a function with ViewChild and input the local reference name inot view child
+  /* get access to a local reference without passing it through a function with ViewChild and input the local reference name in view child
   - you can select a component by passign the component type
     - not as a string
     - give access to the first instance of the component
   - local reference is more common
+  - you select the local reference by passing its name as a string to ViewChild
+  -add { static: true } as a second argument needs to be applied to ALL usages of @ViewChild() when using onInit
+  - all methods and values will be wrap in nativeElement wrapper (see onAddBluePrint method)
   */
 
+  // @ViewChild("serverContentInput", {static: true}) serverContentInput: ElementRef;
   @ViewChild("serverContentInput") serverContentInput: ElementRef;
 
   constructor() {}

@@ -5,12 +5,14 @@ import {
   AfterViewInit,
   Component,
   DoCheck,
+  ElementRef,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
   SimpleChange,
   SimpleChanges,
+  ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
 
@@ -65,6 +67,9 @@ export class ServerElementComponent
   // 3
   ngOnInit(): void {
     console.log("ngOnInit called");
+
+    /* reference cannot be view because the 'view' as not been render */
+    console.log("text content:" + this.header.nativeElement.textContent);
   }
   // 4 (on init)
   /* runs when angular checks any changes
@@ -98,6 +103,9 @@ export class ServerElementComponent
   */
   ngAfterViewInit(): void {
     console.log("ngAfterViewInit called");
+
+    /* reference can be view because the 'view' as been render */
+    console.log("text content:" + this.header.nativeElement.textContent);
   }
   /* 8 spot on first init
   - runs after the content as been check
@@ -114,4 +122,6 @@ export class ServerElementComponent
   ngOnDestroy(): void {
     console.log("ngOnDestroy called");
   }
+
+  @ViewChild("heading", { static: true }) header: ElementRef;
 }
