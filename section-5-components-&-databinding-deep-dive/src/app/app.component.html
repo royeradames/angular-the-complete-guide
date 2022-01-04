@@ -44,7 +44,15 @@
         - using ng-content to specify where to put the html
           - ng-content can select an element by css selector
        -->
-        <p>
+        <!-- you can pass down a reference and access it with ContentChild
+        - view child only works for ts file that is in the same component
+          - app compoenent can use @ViewChild to access the html element
+          - things on the same component are in the same view
+        - ContentChild works when the the reference is pass down to the component (not being part of the component originally)
+          - server-element can use @ContentChild to access the html element
+          - things in the same content in the end are in the same content
+       -->
+        <p #contentParagraph>
           <strong *ngIf="serverElement.type === 'server'" style="color: red">{{
             serverElement.content
           }}</strong>

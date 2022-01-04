@@ -4,6 +4,7 @@ import {
   AfterViewChecked,
   AfterViewInit,
   Component,
+  ContentChild,
   DoCheck,
   ElementRef,
   Input,
@@ -69,7 +70,12 @@ export class ServerElementComponent
     console.log("ngOnInit called");
 
     /* reference cannot be view because the 'view' as not been render */
-    console.log("text content:" + this.header.nativeElement.textContent);
+    console.log("text content:" + this?.header?.nativeElement?.textContent);
+
+    /* reference cannot be access because the 'content' as not been render */
+    console.log(
+      "content paragraph:" + this?.paragraph?.nativeElement?.textContent
+    );
   }
   // 4 (on init)
   /* runs when angular checks any changes
@@ -88,6 +94,11 @@ export class ServerElementComponent
   ngAfterContentInit(): void {
     console.log(
       "ngAfterContentInit called after ngDoCheck and only once like onInit"
+    );
+
+    /* reference can be view because the 'content' as been render */
+    console.log(
+      "content paragraph:" + this.paragraph.nativeElement.textContent
     );
   }
 
@@ -123,5 +134,12 @@ export class ServerElementComponent
     console.log("ngOnDestroy called");
   }
 
+  /* using header to see how the view child is affect in the lifecyle */
   @ViewChild("heading", { static: true }) header: ElementRef;
+
+  /* handle getting access to a reference that is passdown as content
+  - same rules as @ViewChild
+  - similar to @ViewChild, @ContentChild cannot be view until Content Innit method is called
+  */
+  @ContentChild("contentParagraph") paragraph: ElementRef;
 }
