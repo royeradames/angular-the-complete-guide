@@ -32,8 +32,9 @@ export class CookpitComponent implements OnInit {
   constructor() {}
   ngOnInit(): void {}
 
-  /* Pass data to the parent  */
+  /* Pass data to the parent (custom events)  */
   // create the 2 event the parent is listening to
+  // import eventEmitter from angular core
   @Output() serverCreated = new EventEmitter<{
     serverName: string;
     serverContent: string;
