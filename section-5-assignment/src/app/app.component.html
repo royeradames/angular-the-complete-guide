@@ -33,4 +33,24 @@
   </div>
 </div>
 
-<app-game-control></app-game-control>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- get the game tick incrementing number -->
+      <app-game-control
+        (gameCreated)="handleGameTick($event)"
+      ></app-game-control>
+
+      <!-- todo: construct an array the legth of the gameThink and render the odd and even components base on that -->
+      <div
+        class="container"
+        *ngFor="let items of gameTickArray; odd as isOdd; even as isEven"
+      >
+        <p>should appear many times</p>
+        <!-- render conditionall the odd and event component depending if the gametick is even or odd -->
+        <app-odd *ngIf="isOdd"></app-odd>
+        <app-even> *ngIf="isEven"</app-even>
+      </div>
+    </div>
+  </div>
+</div>
