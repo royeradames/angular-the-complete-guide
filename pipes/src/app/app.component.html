@@ -2,15 +2,41 @@
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <ul class="list-group">
+        <!-- allow user to filter by status -->
+        <input type="text" [(ngModel)]="filterStatus" />
+        <!-- handle adding new data to see how filter pipe handles it -->
+        <button (click)="onAddServer()" class="btn btn-primary">
+          Add New Server
+        </button>
+        <!-- pipes can be use in ngfor to filter list -->
         <li
           class="list-group-item"
-          *ngFor="let server of servers"
-          [ngClass]="getStatusClasses(server)">
-          <span
-            class="badge">
+          *ngFor="let server of servers | filter: filterStatus:'status'"
+          [ngClass]="getStatusClasses(server)"
+        >
+          <span class="badge">
             {{ server.status }}
           </span>
-          <strong>{{ server.name }}</strong> | {{ server.instanceType }} | {{ server.started }}
+          <!-- Pipes only transfer the output like css transform
+            - right place to use it is in the template
+            - sytax: {{ <string interpolation> | <pipe name> }}
+            - you can use the premade pipes or make your own custom pipes
+              - list of premade: https://angular.io/api?query=pipe
+              - see the list of options and how to customaize them
+            - custom pipes for when you want to do something more than the default
+              - see short.pipes.ts
+              - need to be declare in .module.ts
+           -->
+          <strong>{{ server.name | shorten: 2 }}</strong> |
+          {{ server.instanceType | uppercase }} |
+          <!-- You can pass arguments to pipes like functions (pipe parametrizing)
+            syntax: {{ <string interpolation> | <pipe name> : <pipe argument>:< more pipe argument> }}
+            -->
+          <!-- pipe chaining can be done by adding another or condition
+              - pipes are read from left to right
+              - {{ server.started | uppercase | date: "fullDate"  }} doesn't work
+             -->
+          {{ server.started | date: "fullDate" | uppercase }}
         </li>
       </ul>
     </div>
