@@ -1,3 +1,4 @@
+<!-- pipes can be generated with ng generate pipe <pipe name> -->
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
@@ -8,6 +9,11 @@
         <button (click)="onAddServer()" class="btn btn-primary">
           Add New Server
         </button>
+
+        <!-- async pipes converts a promise to the resolve or error value
+          without it it displays [object object](promise)
+        -->
+        <h2>Server status: {{ appStatus | async }}</h2>
         <!-- pipes can be use in ngfor to filter list -->
         <li
           class="list-group-item"
