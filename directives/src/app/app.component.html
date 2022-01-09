@@ -58,8 +58,23 @@
       <p appBasicHighlight>Use basic highlight directive</p>
 
       <!-- * use the improve custom directive
-        - see basic-highlight/basic-heighlight.directive.ts-->
-      <p appBetterHighlight>Use better improve highlight directive</p>
+        - see basic-highlight/basic-heighlight.directive.ts
+        - the inputs can be bind because of angular check that the directive can take inputs
+
+      -->
+      <!-- * binding to directive propeties like pipes arguments
+      - set the input and pass down bind to the input
+      - for only 1 input you can give it the same alias as the directive and you can use the directive name to bind to the input and pass down data
+      - [highlightColor]="'red'" = highlightColor="red"
+          - but be careful not to confuse the property binding as a default property
+        - if you give the input the same alias has the directive you don't have to do property binding
+          - can only be done to one property
+
+     -->
+
+      <p [appBetterHighlight]="'yellow'" [highlightColor]="'red'">
+        Use better improve highlight directive
+      </p>
     </div>
   </div>
 </div>

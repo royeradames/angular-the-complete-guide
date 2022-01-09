@@ -20,7 +20,11 @@ import {
   - https://angular.io/api/core/Renderer2
  */
 export class BetterHighlightDirective implements OnInit {
-  @Input() defaultColor: string = "purple";
+  /* with this inputs when you use this directive in a element angular will check and let you bind to this inputs */
+  // @Input() defaultColor: string = "purple";
+
+  // if you give the input the same alias has the directive you don't have to do property binding, // * can only be done to one property
+  @Input("appBetterHighlight") defaultColor: string = "purple";
   @Input() highlightColor: string = "lightblue";
 
   /* bind to the element that uses this directive directly and change its style
@@ -33,6 +37,9 @@ export class BetterHighlightDirective implements OnInit {
 
   constructor(private elRef: ElementRef, private renderer: Renderer2) {}
   ngOnInit(): void {
+    /* set the default value to */
+    this.backgroundColor = this.defaultColor;
+
     /* Implement this callback to set a CSS style for an element in the DOM.
       - @param el — The element.
       - @param style — The name of the style.
