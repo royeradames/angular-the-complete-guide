@@ -82,6 +82,18 @@
         - see app-unless.directive.ts
       -->
       <p *appUnless="onlyOdd">only show when even</p>
+
+      <!-- * ngSwitch
+        for when you have alot of if statments
+        - https://angular.io/api/common/NgSwitch
+        - start with atribute directive for the parent div that sees a value of a property from ts
+       -->
+      <p [ngSwitch]="color">
+        <!-- *ngSwitchCase check and render if the value matches -->
+        <span *ngSwitchCase="'red'">red</span>
+        <span *ngSwitchCase="'blue'">blue</span>
+        <span *ngSwitchDefault>other</span>
+      </p>
     </div>
   </div>
 </div>
