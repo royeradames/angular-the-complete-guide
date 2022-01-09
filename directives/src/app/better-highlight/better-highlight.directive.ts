@@ -1,4 +1,10 @@
-import { Directive, ElementRef, OnInit, Renderer2 } from "@angular/core";
+import {
+  Directive,
+  ElementRef,
+  HostListener,
+  OnInit,
+  Renderer2,
+} from "@angular/core";
 
 /* * cli gneration: ng g d(irective) <name> */
 @Directive({
@@ -20,6 +26,22 @@ export class BetterHighlightDirective implements OnInit {
       - @param value — The new value.
       - @param flags — Flags for style variations. No flags are set by default.
     */
+    this.renderer.setStyle(
+      // cannot pass down the wrapper, you need to pass down the actual element
+      this.elRef.nativeElement,
+      "background-color",
+      "blue"
+    );
+    this.renderer.setStyle(this.elRef.nativeElement, "padding", "1rem");
+    this.renderer.setStyle(this.elRef.nativeElement, "color", "white");
+  }
+
+  /* listen to events with HostListener decorator */
+  // simulate on hover
+  @HostListener("mouseenter") mouseover(eventData: Event) {
+    this.renderer.setStyle(this.elRef.nativeElement, "background-color", "red");
+  }
+  @HostListener("mouseleave") mouseleave(eventData: Event) {
     this.renderer.setStyle(
       // cannot pass down the wrapper, you need to pass down the actual element
       this.elRef.nativeElement,
