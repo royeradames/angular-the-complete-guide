@@ -4,10 +4,12 @@ import { FormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
+import { DisplayOddOrEvenPipe } from './display-odd-or-even.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DisplayOddOrEvenPipe
   ],
   imports: [
     BrowserModule,

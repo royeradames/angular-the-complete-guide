@@ -1,15 +1,38 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
-      <button
-        class="btn btn-primary"
-        (click)="onlyOdd = !onlyOdd">Only show odd numbers</button>
-      <br><br>
+      <button class="btn btn-primary" (click)="onlyOdd = !onlyOdd">
+        Only show odd numbers
+      </button>
+      <br /><br />
+      <!-- ngIf only dipslays the element when the condition is resolve to true
+        -https://angular.io/api/common/NgIf
+      -->
+      <p *ngIf="onlyOdd">The odds numbers</p>
+      <p *ngIf="!onlyOdd">The even numbers</p>
       <ul class="list-group">
+        <!-- ngFor is a loop an array and add the element array index amount of times
+        -https://angular.io/api/common/NgForOf
+       -->
+        <!-- the pipe displayOddOrEven only lets the odd or even number be display from the numbers array -->
         <li
-          class="list-group-item">
+          class="list-group-item"
+          *ngFor="let number of numbers | displayOddOrEven: onlyOdd"
+        >
+          {{ number }}
         </li>
       </ul>
+
+      <!-- ng-template is use to wrap this in ng and it doesn't show in the DOM
+        -https://angular.io/api/core/ng-template
+        - it uses the directives differently from a normal html tag
+        - note:
+          - *ngIf in html tags
+            - The *ngIf directive moves to the <ng-template> where it becomes a property binding in square brackets, [ngIf]. The rest of the <div>, including its class attribute, moves inside the <ng-template>.
+          - [ngIf] in ng-template tags
+          - https://angular.io/guide/structural-directives#asterisk
+        - ng-template can be consider the long way compare to *<directive>
+      -->
       <ng-template [ngIf]="onlyOdd">
         <p>Only odd</p>
       </ng-template>
