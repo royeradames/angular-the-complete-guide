@@ -16,6 +16,8 @@ export class BasicHighlightDirective implements OnInit {
     console.log("BasicHighlightDirective");
   }
   ngOnInit(): void {
+    // not best pratice to directly access the DOM because angular can do that for you
+    // use the renderer instead like in better-ghighlight.directive.ts
     this.elementRef.nativeElement.style.backgroundColor = "green";
   }
 }
