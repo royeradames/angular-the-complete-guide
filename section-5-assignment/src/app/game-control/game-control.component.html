@@ -1,5 +1,7 @@
 <!-- start game -->
-<button (click)="startGame()" class="btn primary-btn">Start</button>
+<button (click)="startGame()" [disabled]="isStarted" class="btn primary-btn">
+  Start
+</button>
 
 <!-- stop game -->
 <button (click)="stopGame()" class="btn primary-btn">Stop</button>

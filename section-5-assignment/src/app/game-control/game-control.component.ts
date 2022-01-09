@@ -6,6 +6,7 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
   styleUrls: ["./game-control.component.css"],
 })
 export class GameControlComponent implements OnInit {
+  isStarted: boolean = false;
   constructor() {}
 
   ngOnInit(): void {}
@@ -31,6 +32,9 @@ export class GameControlComponent implements OnInit {
         gameTick: this.gameTick,
       });
     }, oneSecond);
+
+    // disable the start button
+    this.isStarted = true;
   }
 
   /* When stopping the game, no more events should get emitted
@@ -38,5 +42,8 @@ export class GameControlComponent implements OnInit {
   stopGame() {
     console.log("Game stopped");
     window.clearInterval(this.ref);
+
+    // enable the start button
+    this.isStarted = false;
   }
 }
