@@ -5,7 +5,8 @@
         Only show odd numbers
       </button>
       <br /><br />
-      <!-- ngIf only dipslays the element when the condition is resolve to true
+      <!-- * ngIf
+        only dipslays the element when the condition is resolve to true
         -https://angular.io/api/common/NgIf
       -->
       <p *ngIf="onlyOdd">The odds numbers</p>
@@ -14,16 +15,31 @@
         <!-- ngFor is a loop an array and add the element array index amount of times
         -https://angular.io/api/common/NgForOf
        -->
-        <!-- the pipe displayOddOrEven only lets the odd or even number be display from the numbers array -->
+        <!-- * the pipe
+          displayOddOrEven only lets the odd or even number be display from the numbers array -->
+        <!-- * ngClass
+          conditionally sets classes
+          - https://angular.io/api/common/NgClass
+          - like a cleaner way to add classes to an element
+          - replacement of ternary operator in class attribute
+         -->
+        <!-- *ngStyle
+          allows ts logic to be use to set in line styles
+          - https://angular.io/api/common/NgStyle
+          - like a cleaner way to add styles to an element
+         -->
         <li
           class="list-group-item"
           *ngFor="let number of numbers | displayOddOrEven: onlyOdd"
+          [ngClass]="{ odd: number % 2 === 0, even: number % 2 !== 0 }"
+          [ngStyle]="{ 'border-color': number % 2 === 0 ? 'red' : 'blue' }"
         >
           {{ number }}
         </li>
       </ul>
 
-      <!-- ng-template is use to wrap this in ng and it doesn't show in the DOM
+      <!-- * ng-template is
+        use to wrap this in ng and it doesn't show in the DOM
         -https://angular.io/api/core/ng-template
         - it uses the directives differently from a normal html tag
         - note:
