@@ -4,10 +4,14 @@ import { FormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
+import { ReverseStringPipe } from './reverse-string.pipe';
+import { SortByPipe } from './sort-by.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ReverseStringPipe,
+    SortByPipe
   ],
   imports: [
     BrowserModule,
