@@ -20,10 +20,13 @@ export class SortByPipe implements PipeTransform {
         ? b[propPath] === sortCondition
         : b === sortCondition;
       // 1 moves fordward and -1 moves backward
-      /* in asc
+      /* in asc:
       - do nothing when both a(t the front) and b(at the end) are equal to the sorting condition
       - if a(t the front) has the sorting condition move it to the back
-      - if b(ack) has the sorting condition move it to the front
+      - if b(ack) could be commentted out
+
+      in desc:
+      - only return 0 and moveB are needed
 
       move the b(ack) to the a(t the front) by returning 1, and move the otherones to the back  */
       const moveA = order === "asc" ? -1 : 1;
