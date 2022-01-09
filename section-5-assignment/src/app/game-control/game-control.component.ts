@@ -20,6 +20,9 @@ export class GameControlComponent implements OnInit {
   ref: number;
   gameTick = 0;
 
+  // convert the gameTick into an array to dinamically display the odd and event compoments
+  gameTickArray;
+
   // every 1 sec emit a increasing number to the parent
   startGame() {
     // todo: disable the start button untill the game is over
@@ -27,9 +30,12 @@ export class GameControlComponent implements OnInit {
     console.log("Game started");
     this.ref = window.setInterval(() => {
       this.gameTick++;
+      console.log(this.gameTick);
+
+      this.gameTickArray = new Array(this.gameTick);
 
       this.gameCreated.emit({
-        gameTick: this.gameTick,
+        gameTick: this.gameTickArray,
       });
     }, oneSecond);
 
@@ -45,5 +51,9 @@ export class GameControlComponent implements OnInit {
 
     // enable the start button
     this.isStarted = false;
+  }
+
+  resetGame() {
+    this.gameTick = 0;
   }
 }
