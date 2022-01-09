@@ -53,11 +53,12 @@
         <p>Only odd</p>
       </ng-template>
 
-      <!--  * custom directive
+      <!--  * custom property directive
+        - changes the element properties based on the value of the property
         see basic-highlight/basic-heighlight.directive.ts-->
       <p appBasicHighlight>Use basic highlight directive</p>
 
-      <!-- * use the improve custom directive
+      <!-- * use the improve custom property directive
         - see basic-highlight/basic-heighlight.directive.ts
         - the inputs can be bind because of angular check that the directive can take inputs
 
@@ -75,6 +76,12 @@
       <p [appBetterHighlight]="'yellow'" [highlightColor]="'red'">
         Use better improve highlight directive
       </p>
+
+      <!-- * custom structural directive
+        - custom funcitons that render html
+        - see app-unless.directive.ts
+      -->
+      <p *appUnless="onlyOdd">only show when even</p>
     </div>
   </div>
 </div>
