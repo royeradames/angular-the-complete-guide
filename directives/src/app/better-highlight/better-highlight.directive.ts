@@ -3,6 +3,7 @@ import {
   ElementRef,
   HostBinding,
   HostListener,
+  Input,
   OnInit,
   Renderer2,
 } from "@angular/core";
@@ -19,12 +20,16 @@ import {
   - https://angular.io/api/core/Renderer2
  */
 export class BetterHighlightDirective implements OnInit {
+  @Input() defaultColor: string = "purple";
+  @Input() highlightColor: string = "lightblue";
+
   /* bind to the element that uses this directive directly and change its style
     List of things you can bind to with an html element
       - https://www.w3schools.com/jsref/dom_obj_all.asp
     - Shorter syntax for than renderer
     */
-  @HostBinding("style.backgroundColor") backgroundColor: string = "purple";
+  @HostBinding("style.backgroundColor") backgroundColor: string =
+    this.defaultColor;
 
   constructor(private elRef: ElementRef, private renderer: Renderer2) {}
   ngOnInit(): void {
@@ -49,7 +54,7 @@ export class BetterHighlightDirective implements OnInit {
   // simulate on hover
   @HostListener("mouseenter") mouseover(eventData: Event) {
     // this.renderer.setStyle(this.elRef.nativeElement, "background-color", "red");
-    this.backgroundColor = "red";
+    this.backgroundColor = this.highlightColor;
   }
   @HostListener("mouseleave") mouseleave(eventData: Event) {
     // this.renderer.setStyle(
@@ -58,7 +63,7 @@ export class BetterHighlightDirective implements OnInit {
     //   "background-color",
     //   "blue"
     // );
-    this.backgroundColor = "blue";
+    this.backgroundColor = this.defaultColor;
     this.renderer.setStyle(this.elRef.nativeElement, "padding", "1rem");
     this.renderer.setStyle(this.elRef.nativeElement, "color", "white");
   }
