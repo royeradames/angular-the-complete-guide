@@ -1,4 +1,9 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+/* //*services make eventEmitter and output not needed */
+import {
+  Component,
+  // EventEmitter, Output
+} from "@angular/core";
+import { AccountsService } from "../accounts.service";
 
 import { LoggingService } from "../logging.service";
 
@@ -7,10 +12,13 @@ import { LoggingService } from "../logging.service";
   templateUrl: "./new-account.component.html",
   styleUrls: ["./new-account.component.css"],
   // to do hierachical injector you need to tell angular what are the services in the prodivers array
-  providers: [LoggingService],
+  providers: [
+    // LoggingService,
+    // AccountsService, // * if you provide AccountService here it will create a new instance of AccountsService for this component and all it's children
+  ],
 })
 export class NewAccountComponent {
-  @Output() accountAdded = new EventEmitter<{ name: string; status: string }>();
+  // @Output() accountAdded = new EventEmitter<{ name: string; status: string }>();
 
   constructor(
     /* * hierachical injector
@@ -24,13 +32,19 @@ export class NewAccountComponent {
 
     */
 
-    private logginService: LoggingService
-  ) {}
+    private logginService: LoggingService,
+    private accountsService: AccountsService
+  ) {
+    /* use the eventEmitter value store in accounts service that account added information to and print out an alert window */
+    this.accountsService.statusUpdated.subscribe((status: string) =>
+      alert("New Status: " + status)
+    );
+  }
   onCreateAccount(accountName: string, accountStatus: string) {
-    this.accountAdded.emit({
-      name: accountName,
-      status: accountStatus,
-    });
+    // this.accountAdded.emit({
+    //   name: accountName,
+    //   status: accountStatus,
+    // });
     // console.log("A server status changed, new status: " + accountStatus);
 
     /* import and using the import inside the function is not how you use services
@@ -40,6 +54,9 @@ export class NewAccountComponent {
     // const service = new LoggingService();
     // service.logStatusChange(accountStatus);
 
-    this.logginService.logStatusChange(accountStatus);
+    // this.logginService.logStatusChange(accountStatus);
+
+    /* //* adding and deleting data from a service(redux store) can be done by accessing the method that changes the data (or even editing the data directly) */
+    this.accountsService.addAccount(accountName, accountStatus);
   }
 }
