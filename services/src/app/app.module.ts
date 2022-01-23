@@ -14,9 +14,10 @@ import { LoggingService } from "./logging.service";
   providers: [
     /* if you provide sergice int he model all of the other components declare here will have access to it
     - you can also nest providers inside providers that are in the module.ts file
+    //* new syntax is better @Injectable({providedIn: 'root'}) see the service file
      */
-    AccountsService,
-    LoggingService,
+    // AccountsService,
+    // LoggingService,
   ],
   bootstrap: [AppComponent],
 })
