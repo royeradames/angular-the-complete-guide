@@ -42,6 +42,7 @@ export class AppComponent implements OnInit {
        */
       .subscribe((responseData) => {
         console.log(responseData);
+        this.loadedPosts.push(postData);
       });
   }
 
@@ -52,11 +53,17 @@ export class AppComponent implements OnInit {
 
   onClearPosts() {
     // Send Http request
+    this.postService
+      .deleteAllPost()
+      /* subscribes only runs when it succeeded  */
+      .subscribe(() => (this.loadedPosts = []));
   }
 
   private fetchPosts() {
     /* set the loading variable to true */
     this.isFetching = true;
+    console.log("loadedPosts", this.loadedPosts);
+
     /*
     - get request don't need a second option. You can see what you need in by ts description
     - you do need a subscribe to handle the return data
@@ -64,6 +71,7 @@ export class AppComponent implements OnInit {
     return this.postService.fetchPosts().subscribe((posts) => {
       /* set the loading variable to false */
       this.isFetching = false;
+      console.log(posts);
       return (this.loadedPosts = posts);
     });
   }

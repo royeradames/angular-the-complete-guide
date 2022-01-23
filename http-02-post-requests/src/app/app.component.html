@@ -58,7 +58,7 @@
           <p>...Fetching</p>
         </li>
       </ul>
-      <ul class="list-group" *ngIf="loadedPosts.length > 1">
+      <ul class="list-group" *ngIf="loadedPosts.length >= 1 && !isFetching">
         <li class="list-group-item" *ngFor="let loadedPost of loadedPosts">
           <h2>
             {{ loadedPost.title }}

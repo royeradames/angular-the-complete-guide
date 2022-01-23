@@ -1,3 +1,4 @@
+/* database: https://console.firebase.google.com/u/0/project/angular-the-complete-gui-42271/database/angular-the-complete-gui-42271-default-rtdb/data */
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map } from "rxjs/operators";
@@ -10,6 +11,8 @@ import { Post } from "./post.model";
   providedIn: "root",
 })
 export class PostService {
+  url =
+    "https://angular-the-complete-gui-42271-default-rtdb.firebaseio.com/posts.json";
   constructor(
     /* needs to be imported in teh module.ts file */
     private http: HttpClient
@@ -20,14 +23,12 @@ export class PostService {
       this.http
         /* url and body are require for the post, options can handle headers and other things */
         // types can be define for the returning data by <Type>
-        .post<{ name: string }>(
-          "https://angular-the-complete-gui-42271-default-rtdb.firebaseio.com/posts.json",
-          postData
-        )
+        .post<{ name: string }>(this.url, postData)
     );
     /* angular uses observables to handle the sending of the request, and how it would handle the response
       - if not provided angular doesn't send the request
       - you can see that the post method return an observable
+      - subscribes only runs when it succeeded
        */
   }
   fetchPosts() {
@@ -35,9 +36,7 @@ export class PostService {
       this.http
         /* the http methods are type generic
       - you can set incoming data type inside the <> syntax */
-        .get<{ [key: string]: Post }>(
-          "https://angular-the-complete-gui-42271-default-rtdb.firebaseio.com/posts.json"
-        )
+        .get<{ [key: string]: Post }>(this.url)
         /* to transform the data to be useful in angular, its best to
         let pipes handle the transformation
         - so that division of concern is made
@@ -64,5 +63,8 @@ export class PostService {
           })
         )
     );
+  }
+  deleteAllPost() {
+    return this.http.delete(this.url);
   }
 }
