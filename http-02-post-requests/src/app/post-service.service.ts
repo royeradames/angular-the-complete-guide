@@ -1,6 +1,7 @@
 /* database: https://console.firebase.google.com/u/0/project/angular-the-complete-gui-42271/database/angular-the-complete-gui-42271-default-rtdb/data */
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Post } from "./post.model";
 
@@ -11,6 +12,11 @@ import { Post } from "./post.model";
   providedIn: "root",
 })
 export class PostService {
+  /* this error can handle the service error
+  - this strategy is called forward strategy of handling error
+  */
+  error = new Subject<string>();
+
   url =
     "https://angular-the-complete-gui-42271-default-rtdb.firebaseio.com/posts.json";
   constructor(
@@ -30,6 +36,15 @@ export class PostService {
       - you can see that the post method return an observable
       - subscribes only runs when it succeeded
        */
+    /* handling error in a subscribe used in the service handler
+      .subscribe(
+        responseData => console.log(responseData),
+        errorResponse => this.error.next(error.message)
+      )
+
+      then just subscribe to place that you want to use the error message, and
+      unsubscribe on component dismount
+      */
   }
   fetchPosts() {
     return (

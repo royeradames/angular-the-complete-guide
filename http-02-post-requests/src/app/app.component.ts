@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 /* complete list of operators https://rxjs.dev/api?query=operators */
 import { Post } from "./post.model";
 import { PostService } from "./post-service.service";
+import { Subject } from "rxjs";
 /* the database will expire in 30 days and it can be renew in firebase.com */
 
 @Component({
@@ -11,7 +12,11 @@ import { PostService } from "./post-service.service";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
+  /*
+  private errorSub: Subscription
+   */
   loadedPosts: Post[] = [];
+  error: null | string = null;
   /* you can set a variable to watch if the fetch request is has been send and received
   - why?
     - so that you can show the user something while the wait for their data
@@ -30,6 +35,12 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    /* capture the subscription to PostService emitter for later unsubscribing when on ngOnDelete
+    capture the error message when even there is data
+    all of this steps are needed for the forward strategy of handling error
+    I prefer letter the service set up the http, and the component to handle the error and data
+    this.errorSub = this.postsService.error.subscribe(errorMessage => this.error = errorMessage)
+     */
     this.fetchPosts();
   }
 
@@ -40,10 +51,17 @@ export class AppComponent implements OnInit {
       - if not provided angular doesn't send the request
       - you can see that the post method return an observable
        */
-      .subscribe((responseData) => {
-        console.log(responseData);
-        this.loadedPosts.push(postData);
-      });
+      .subscribe(
+        (responseData) => {
+          console.log(responseData);
+          this.loadedPosts.push(postData);
+        },
+        /* the second function pass to subscribe handles the error */
+        (errorResponse: HttpErrorResponse) => {
+          /* the error is api base, aways check what you are getting */
+          this.error = errorResponse.error.error;
+        }
+      );
   }
 
   onFetchPosts() {
@@ -68,11 +86,25 @@ export class AppComponent implements OnInit {
     - get request don't need a second option. You can see what you need in by ts description
     - you do need a subscribe to handle the return data
      */
-    return this.postService.fetchPosts().subscribe((posts) => {
-      /* set the loading variable to false */
-      this.isFetching = false;
-      console.log(posts);
-      return (this.loadedPosts = posts);
-    });
+    return this.postService.fetchPosts().subscribe(
+      (posts) => {
+        /* set the loading variable to false */
+        this.isFetching = false;
+        console.log(posts);
+        return (this.loadedPosts = posts);
+      },
+      /* the second function pass to subscribe handles the error */
+      (errorResponse: HttpErrorResponse) => {
+        /* the error is api base, aways check what you are getting */
+        this.error = errorResponse.error.error;
+      }
+    );
   }
+
+  /*
+  unsub from the service emitter so there is no memory leak
+  ngOnDestroy(){
+    this.errorSub.Unsubscribe()
+  }
+  */
 }
