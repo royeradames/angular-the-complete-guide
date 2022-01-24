@@ -54,6 +54,10 @@ export class AppComponent implements OnInit {
       .subscribe(
         (responseData) => {
           console.log(responseData);
+          /* handle error message */
+          this.error = null;
+
+          /* handle data */
           this.loadedPosts.push(postData);
         },
         /* the second function pass to subscribe handles the error */
@@ -90,7 +94,10 @@ export class AppComponent implements OnInit {
       (posts) => {
         /* set the loading variable to false */
         this.isFetching = false;
-        console.log(posts);
+        /* handle the error if any */
+        this.error = null;
+
+        /* handle the data */
         return (this.loadedPosts = posts);
       },
       /* the second function pass to subscribe handles the error */
@@ -99,6 +106,13 @@ export class AppComponent implements OnInit {
         this.error = errorResponse.error.error;
       }
     );
+  }
+
+  resetErrorMessage() {
+    /* reset error */
+    this.error = null;
+    /* reset loading message */
+    this.isFetching = false;
   }
 
   /*

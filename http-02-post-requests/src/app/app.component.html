@@ -61,6 +61,9 @@
       <div class="alert alert-danger" *ngIf="error">
         <h1>An Error Occurred!</h1>
         <p>{{ error }}</p>
+        <button (click)="resetErrorMessage()" class="btn btn-danger">
+          Okay
+        </button>
       </div>
       <ul class="list-group" *ngIf="loadedPosts.length >= 1 && !isFetching">
         <li class="list-group-item" *ngFor="let loadedPost of loadedPosts">
