@@ -1,5 +1,5 @@
 /* database: https://console.firebase.google.com/u/0/project/angular-the-complete-gui-42271/database/angular-the-complete-gui-42271-default-rtdb/data */
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
@@ -47,11 +47,39 @@ export class PostService {
       */
   }
   fetchPosts() {
+    /* adding multiple query params or could added directly to the url
+    - doing a loop to add the key has the first value and the value as the second
+      - much easier than manually adding the params
+
+      const paramList: {[kee: string]: string}[]
+      paramList.foEach((param) => {
+        const key = Object.keys(param)[0]
+        searchParams = searchParams.append(key, param[key]);
+      })
+    */
+    let searchParams = new HttpParams();
+    searchParams = searchParams.append("print", "pretty");
+    searchParams = searchParams.append("custom", "key");
+
     return (
       this.http
         /* the http methods are type generic
       - you can set incoming data type inside the <> syntax */
-        .get<{ [key: string]: Post }>(this.url)
+        .get<{ [key: string]: Post }>(this.url, {
+          /* adding headers. simple with this syntax
+          - all method have the option, and in the option you can set the headers.
+          - you pass it down has an object literal
+           */
+          headers: new HttpHeaders({ "custom-header": "98654" }),
+
+          /* setting the params `?varName=value&otherVar=otherValue`
+          could be done in the url
+          - but here it avoids the concating long string
+          - like the postman params tab
+          - adding a single query param: new HttpParams().set("print", "pretty")
+           */
+          params: searchParams,
+        })
         /* to transform the data to be useful in angular, its best to
         let pipes handle the transformation
         - so that division of concern is made
