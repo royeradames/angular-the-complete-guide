@@ -1,8 +1,8 @@
 /* database: https://console.firebase.google.com/u/0/project/angular-the-complete-gui-42271/database/angular-the-complete-gui-42271-default-rtdb/data */
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
-import { map } from "rxjs/operators";
+import { Subject, throwError } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 import { Post } from "./post.model";
 
 /* it's best to move the http setup to the service and the setting the handling of the subscribe(data)
@@ -58,7 +58,7 @@ export class PostService {
         - could be done in the subscribe method but
         - using pipes is best pratice
 
-        pipes transform the data observable through a list of methods before it reaches the subscribe method.
+        pipes like middleware transform the data observable through a list of methods before it reaches the subscribe method.
         - https://rxjs.dev/guide/operators
         - operators are import form rxjs/operators
           - https://rxjs.dev/api?query=operators
@@ -75,6 +75,14 @@ export class PostService {
               }
             }
             return postsArray;
+          }),
+          /* catch Error can be use has a general error handler to a specific endpoint */
+          catchError((errorRes) => {
+            // can send to analytics server
+
+            // throw a new error to move it alog the chain of error handlers if you want or
+            // you can just have this general error handler take care of the error
+            return throwError(errorRes);
           })
         )
     );
