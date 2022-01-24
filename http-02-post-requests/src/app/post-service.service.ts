@@ -1,8 +1,13 @@
 /* database: https://console.firebase.google.com/u/0/project/angular-the-complete-gui-42271/database/angular-the-complete-gui-42271-default-rtdb/data */
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpEventType,
+  HttpHeaders,
+  HttpParams,
+} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject, throwError } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import { catchError, map, tap } from "rxjs/operators";
 import { Post } from "./post.model";
 
 /* it's best to move the http setup to the service and the setting the handling of the subscribe(data)
@@ -29,7 +34,18 @@ export class PostService {
       this.http
         /* url and body are require for the post, options can handle headers and other things */
         // types can be define for the returning data by <Type>
-        .post<{ name: string }>(this.url, postData)
+        .post<{ name: string }>(this.url, postData, {
+          /* the observe option let you change how angular parse the response data
+          - great for when you want access to more than the response body
+          - available
+            - body (default)
+            - events (more in the delete method)
+            - response
+              - typical axios whole response object
+          this is how you observe the response and not just the body response (subsect of response)
+          */
+          observe: "response",
+        })
     );
     /* angular uses observables to handle the sending of the request, and how it would handle the response
       - if not provided angular doesn't send the request
@@ -116,6 +132,29 @@ export class PostService {
     );
   }
   deleteAllPost() {
-    return this.http.delete(this.url);
+    return this.http
+      .delete(this.url, {
+        observe: "events",
+      })
+      .pipe(
+        // tap runs code without disturbing anything.
+        tap((event) => {
+          console.log(event);
+
+          /* you can granually change the UI base in the event type lifecycle
+          - HTTPEventType is a ts thing that makes the event human readble
+          - you can see the number value and string that it represents has a enumerate
+          */
+          if (event.type === HttpEventType.Sent) {
+            //... do something in the UI when the event is send
+          }
+
+          // check if the event body has been receive
+          if (event.type === HttpEventType.Response) {
+            // safely console.log the event body
+            console.log(event.body);
+          }
+        })
+      );
   }
 }
