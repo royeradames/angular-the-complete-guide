@@ -25,7 +25,7 @@ export class PostService {
   url =
     "https://angular-the-complete-gui-42271-default-rtdb.firebaseio.com/posts.json";
   constructor(
-    /* needs to be imported in teh module.ts file */
+    /* needs to be imported in the module.ts file */
     private http: HttpClient
   ) {}
   createAnStorePost(postData: Post) {
@@ -144,6 +144,7 @@ export class PostService {
           /* you can granually change the UI base in the event type lifecycle
           - HTTPEventType is a ts thing that makes the event human readble
           - you can see the number value and string that it represents has a enumerate
+          This could be grate to handle when to start and stop an animation.
           */
           if (event.type === HttpEventType.Sent) {
             //... do something in the UI when the event is send
